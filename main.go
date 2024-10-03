@@ -277,7 +277,9 @@ func copyFile(src, dst string) error {
 	defer source.Close()
 
 	// Create the destination file
-	destination, err := os.Create(dst)
+	// destination, err := os.Create(dst)
+	// Create the destination file with 0600 permissions (only owner can read/write)
+	destination, err := os.OpenFile(dst, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
